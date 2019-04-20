@@ -15,28 +15,23 @@
 
 OperandFactory* OperandFactory::m_instance = 0;
 
-OperandFactory::OperandFactory() {
+OperandFactory::OperandFactory() {}
 
-}
+OperandFactory::funPtrs OperandFactory::m_creators[] = {
+		&OperandFactory::createInt8
+};
 
-OperandFactory*
+OperandFactory&
 OperandFactory::getInstance() {
-	if (!m_instance)
-		m_instance = new OperandFactory();
-	return m_instance;
+	static OperandFactory instance;
+	return instance;
 }
 
 IOperand const *OperandFactory::createOperand(eOperandType type, std::string const value) const {
-	switch (type) {
-		case Int8:
-			return createInt8(value);
-		default:
-			throw std::logic_error("Inapropriate type");
-			break;
-	}
+	return (this->*(m_creators[type]))(value);
 }
 
-IOperand const *OperandFactory::createInt8(std::string const value) const {
+IOperand const *OperandFactory::createInt8(std::string const& value) const {
 	int8_t val = std::stoi(value);
 	return new Operand<int8_t>(val);
 }
