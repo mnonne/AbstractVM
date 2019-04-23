@@ -15,6 +15,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "../src/OperandFactory.h"
+#include "../src/OperandSizeException.h"
 
 class Int8Fixture : public ::testing::Test {
 public:
@@ -48,10 +49,8 @@ TEST_F(Int8Fixture, Type)
 	ASSERT_EQ(op3->getType(), Int8);
 	auto op4 = FACTORY.createOperand(Int8, m_max);
 	ASSERT_EQ(op4->getType(), Int8);
-	auto op5 = FACTORY.createOperand(Int8, m_underflow);
-	ASSERT_EQ(op5->getType(), Int8);
-	auto op6 = FACTORY.createOperand(Int8, m_overflow);
-	ASSERT_EQ(op6->getType(), Int8);
+	ASSERT_THROW(auto op5 = FACTORY.createOperand(Int8, m_underflow);, OperandSizeException);
+	ASSERT_THROW(auto op6 = FACTORY.createOperand(Int8, m_overflow);, OperandSizeException);
 }
 
 TEST_F(Int8Fixture, Precision)
@@ -64,10 +63,6 @@ TEST_F(Int8Fixture, Precision)
 	ASSERT_EQ(op3->getPrecision(), 0);
 	auto op4 = FACTORY.createOperand(Int8, m_max);
 	ASSERT_EQ(op4->getPrecision(), 0);
-	auto op5 = FACTORY.createOperand(Int8, m_underflow);
-	ASSERT_EQ(op5->getPrecision(), 0);
-	auto op6 = FACTORY.createOperand(Int8, m_overflow);
-	ASSERT_EQ(op6->getPrecision(), 0);
 }
 
 TEST_F(Int8Fixture, ToString)
@@ -80,10 +75,4 @@ TEST_F(Int8Fixture, ToString)
 	ASSERT_STREQ(m_min.c_str(), op3->toString().c_str());
 	auto op4 = FACTORY.createOperand(Int8, m_max);
 	ASSERT_STREQ(m_max.c_str(), op4->toString().c_str());
-	auto op5 = FACTORY.createOperand(Int8, m_underflow);
-	int8_t exp = std::stoi(m_underflow);
-	ASSERT_STREQ(std::to_string(exp).data(), op5->toString().c_str());
-	auto op6 = FACTORY.createOperand(Int8, m_overflow);
-	exp = std::stoi(m_overflow);
-	ASSERT_STREQ(std::to_string(exp).data(), op6->toString().c_str());
 }

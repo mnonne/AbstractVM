@@ -17,6 +17,7 @@
 
 #include "IOperand.h"
 #include <exception>
+#include <iomanip>
 #include <sstream>
 
 template<typename T>
@@ -31,11 +32,11 @@ public:
 	}
 	virtual ~Operand() {}
 
-	virtual int getPrecision(void) const {
+	virtual int getPrecision(void) const override {
 		return getType();
 	}
 
-	virtual eOperandType getType(void) const
+	virtual eOperandType getType(void) const override
 	{
 		const std::type_info& tp = typeid(T);
 		if (tp == typeid(int8_t))
@@ -52,15 +53,25 @@ public:
 			throw std::invalid_argument("Unhandled type");
 	}
 
-	virtual IOperand const*	operator+(IOperand const& rhs) {
-		std::string newVal = std::to_string(m_value + std::stod(rhs.toString()));
-		return FACTORY.createOperand(getPrecision() > rhs.getPrecision() ?
-									getPrecision() : rhs.getPrecision(),
-									newVal);
+	virtual IOperand const*	operator+(IOperand const& rhs) const override {
+		eOperandType newType = compareOperand(rhs);
+		if (newType < Float) {
+			int64_t newVal = m_value + std::stoll(rhs.toString());
+			return FACTORY.createOperand(newType, std::to_string(newVal));
+		}
+		else
+		{
+			double newVal = m_value + std::stod(rhs.toString());
+			return FACTORY.createOperand(newType, std::to_string(newVal));
+		}
 	}
 
-	std::string const& toString(void) const {
+	std::string const& toString(void) const override {
 		return m_strVal;
+	}
+
+	eOperandType const compareOperand(IOperand const& op) const {
+		return (getPrecision() > op.getPrecision()) ? getType() : op.getType();
 	}
 
 private:

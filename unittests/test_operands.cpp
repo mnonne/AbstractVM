@@ -15,37 +15,123 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "../src/OperandFactory.h"
+#include "../src/OperandSizeException.h"
 
 class OperandsFixture : public ::testing::Test {
 public:
+	OperandsFixture() :
+	int8map{
+			{FACTORY.createOperand(Int8, "42"), 42},
+			{FACTORY.createOperand(Int8, "-25"), -25},
+			{FACTORY.createOperand(Int8, std::to_string(INT8_MIN)), INT8_MIN},
+			{FACTORY.createOperand(Int8, std::to_string(INT8_MAX)), INT8_MAX}
+	},
+	int16map{
+			{FACTORY.createOperand(Int16, "4200"), 4200},
+			{FACTORY.createOperand(Int16, "-2500"), -2500},
+			{FACTORY.createOperand(Int16, std::to_string(INT16_MIN)), INT16_MIN},
+			{FACTORY.createOperand(Int16, std::to_string(INT16_MAX)), INT16_MAX}
+	},
+	int32map{
+			{FACTORY.createOperand(Int32, "42000"), 42000},
+			{FACTORY.createOperand(Int32, "-25000"), -25000},
+			{FACTORY.createOperand(Int32, std::to_string(INT32_MIN)), INT32_MIN},
+			{FACTORY.createOperand(Int32, std::to_string(INT32_MAX)), INT32_MAX},
+	},
+	floatmap{
+			{FACTORY.createOperand(Float, "42.42"), 42.42f},
+			{FACTORY.createOperand(Float, "-25.0042"), -25.0042f}
+	},
+	doublemap{
+			{FACTORY.createOperand(Double, "42.0042"), 42.0042},
+			{FACTORY.createOperand(Double, "-25.0042"), -25.0042}
+	}
+	{
+	}
 	virtual ~OperandsFixture() {}
 
 protected:
 	virtual void SetUp() {
-		int8map = {
-				{std::to_string(42), 42},
-				{std::to_string(-25), -25},
-				{std::to_string(INT8_MIN), INT8_MIN},
-				{std::to_string(INT8_MAX), INT8_MAX},
-				{std::to_string(INT8_MIN - 1), INT8_MIN - 1},
-				{std::to_string(INT8_MAX + 1), INT8_MIN + 1}
-		};
+
 	}
 
-	std::map<std::string, int8_t> int8map;
-	std::map<std::string, int16_t> int16map;
-	std::map<std::string, int32_t> int32map;
-	std::map<std::string, float> floatmap;
-	std::map<std::string, double> doublemap;
+	std::map<const IOperand*, int8_t> int8map;
+	std::map<const IOperand*, int16_t> int16map;
+	std::map<const IOperand*, int32_t> int32map;
+	std::map<const IOperand*, float> floatmap;
+	std::map<const IOperand*, double> doublemap;
 };
+
+template <class T, class D>
+void testOperandsAddition(T op1, D op2) {
+	try {
+		auto result = *op1->first + *op2->first;
+		if (result->getType() == Int8) {
+			int64_t expected = op1->second + op2->second;
+			ASSERT_STREQ(result->toString().data(), std::to_string(expected).data());
+		}
+		else if (result->getType() == Int16) {
+			int16_t expected = op1->second + op2->second;
+			ASSERT_STREQ(result->toString().data(), std::to_string(expected).data());
+		}
+		else if (result->getType() == Int32) {
+			int32_t expected = op1->second + op2->second;
+			ASSERT_STREQ(result->toString().data(), std::to_string(expected).data());
+		}
+		else if (result->getType() == Float) {
+			ASSERT_FLOAT_EQ(std::stof(result->toString().data()), op1->second + op2->second);
+		}
+		else if (result->getType() == Double) {
+			ASSERT_NEAR(std::stod(result->toString().data()), op1->second + op2->second, 0.00001);
+		}
+	}
+	catch (OperandSizeException& e)
+	{
+		ASSERT_THROW(auto result = *op1->first + *op2->first;, OperandSizeException);
+	}
+}
 
 TEST_F(OperandsFixture, AddInt8Int8)
 {
 	for (auto it = int8map.begin(); it != int8map.end(); ++it)
 	{
-		for (auto it2 = it; )
-		IOperand** const =
+		for (auto it2 = int8map.begin(); it2 != int8map.end(); ++it2)
+			testOperandsAddition(it, it2);
 	}
-	auto op1 = FACTORY.createOperand(int8map.find("42")->second);
-	auto res = op1 + op1;
+}
+
+TEST_F(OperandsFixture, AddInt8Int16)
+{
+	for (auto it = int8map.begin(); it != int8map.end(); ++it)
+	{
+		for (auto it2 = int16map.begin(); it2 != int16map.end(); ++it2)
+			testOperandsAddition(it, it2);
+	}
+}
+
+TEST_F(OperandsFixture, AddInt8Int32)
+{
+	for (auto it = int8map.begin(); it != int8map.end(); ++it)
+	{
+		for (auto it2 = int32map.begin(); it2 != int32map.end(); ++it2)
+			testOperandsAddition(it, it2);
+	}
+}
+
+TEST_F(OperandsFixture, AddInt8Float)
+{
+	for (auto it = int8map.begin(); it != int8map.end(); ++it)
+	{
+		for (auto it2 = floatmap.begin(); it2 != floatmap.end(); ++it2)
+			testOperandsAddition(it, it2);
+	}
+}
+
+TEST_F(OperandsFixture, AddInt8Double)
+{
+	for (auto it = int8map.begin(); it != int8map.end(); ++it)
+	{
+		for (auto it2 = doublemap.begin(); it2 != doublemap.end(); ++it2)
+			testOperandsAddition(it, it2);
+	}
 }
