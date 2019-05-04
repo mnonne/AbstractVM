@@ -11,16 +11,19 @@ m_info("Operand size overflow of underflow")
 
 }
 
-OperandSizeException::OperandSizeException(const OperandSizeException &rhs) {
+OperandSizeException::OperandSizeException(const OperandSizeException &rhs)
+{
 	//TODO: implement this
 }
 
-OperandSizeException::~OperandSizeException() {
+OperandSizeException::~OperandSizeException()
+{
 
 }
 
-const OperandSizeException& OperandSizeException::operator=(const OperandSizeException &rhs) {
-//	return OperandSizeException();
+const OperandSizeException& OperandSizeException::operator=(const OperandSizeException &rhs)
+{
+	return OperandSizeException();
 //TODO: implement this
 }
 
@@ -30,7 +33,8 @@ m_info(msg)
 
 }
 
-const char *OperandSizeException::what() const _GLIBCXX_USE_NOEXCEPT {
+const char* OperandSizeException::getInfo() const
+{
 	return m_info;
 }
 

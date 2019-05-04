@@ -40,11 +40,11 @@ public:
 	},
 	floatmap{
 			{FACTORY.createOperand(Float, "42.42"), 42.42f},
-			{FACTORY.createOperand(Float, "-25.0042"), -25.0042f}
+			{FACTORY.createOperand(Float, "-25.42"), -25.42f}
 	},
 	doublemap{
-			{FACTORY.createOperand(Double, "42.0042"), 42.0042},
-			{FACTORY.createOperand(Double, "-25.0042"), -25.0042}
+			{FACTORY.createOperand(Double, "42.42"), 42.42},
+			{FACTORY.createOperand(Double, "-25.42"), -25.42}
 	}
 	{
 	}
@@ -79,15 +79,55 @@ void testOperandsAddition(T op1, D op2) {
 			ASSERT_STREQ(result->toString().data(), std::to_string(expected).data());
 		}
 		else if (result->getType() == Float) {
-			ASSERT_FLOAT_EQ(std::stof(result->toString().data()), op1->second + op2->second);
+			std::ostringstream strs;
+			strs << op1->second + op2->second;
+			ASSERT_STREQ(result->toString().data(), strs.str().data());
 		}
 		else if (result->getType() == Double) {
-			ASSERT_NEAR(std::stod(result->toString().data()), op1->second + op2->second, 0.00001);
+			std::ostringstream strs;
+			strs << op1->second + op2->second;
+			ASSERT_STREQ(result->toString().data(), strs.str().data());
 		}
 	}
 	catch (OperandSizeException& e)
 	{
 		ASSERT_THROW(auto result = *op1->first + *op2->first;, OperandSizeException);
+	}
+}
+
+template <class T, class D>
+void testOperandsSubtraction(T op1, D op2)
+{
+	try {
+		auto result = *op1->first - *op2->first;
+		if (result->getType() == Int8) {
+			int64_t expected = op1->second - op2->second;
+			ASSERT_STREQ(result->toString().data(), std::to_string(expected).data());
+		}
+		else if (result->getType() == Int16) {
+			int16_t expected = op1->second - op2->second;
+			ASSERT_STREQ(result->toString().data(), std::to_string(expected).data());
+		}
+		else if (result->getType() == Int32) {
+			int32_t expected = op1->second - op2->second;
+			ASSERT_STREQ(result->toString().data(), std::to_string(expected).data());
+		}
+		else if (result->getType() == Float) {
+			std::cout << "+++++++++\n" << "op1: " << (int)op1->second << "\nop2: " << op2->second << std::endl;
+			std::ostringstream strs;
+			strs << op1->second - op2->second;
+			ASSERT_STREQ(result->toString().data(), strs.str().data());
+		}
+		else if (result->getType() == Double) {
+			std::cout << "+++++++++\n" << "op1: " << (int)op1->second << "\nop2: " << op2->second << std::endl;
+			std::ostringstream strs;
+			strs << op1->second - op2->second;
+			ASSERT_STREQ(result->toString().data(), strs.str().data());
+		}
+	}
+	catch (OperandSizeException& e)
+	{
+		ASSERT_THROW(auto result = *op1->first - *op2->first;, OperandSizeException);
 	}
 }
 
@@ -105,7 +145,10 @@ TEST_F(OperandsFixture, AddInt8Int16)
 	for (auto it = int8map.begin(); it != int8map.end(); ++it)
 	{
 		for (auto it2 = int16map.begin(); it2 != int16map.end(); ++it2)
+		{
 			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
 	}
 }
 
@@ -114,7 +157,10 @@ TEST_F(OperandsFixture, AddInt8Int32)
 	for (auto it = int8map.begin(); it != int8map.end(); ++it)
 	{
 		for (auto it2 = int32map.begin(); it2 != int32map.end(); ++it2)
+		{
 			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
 	}
 }
 
@@ -123,7 +169,10 @@ TEST_F(OperandsFixture, AddInt8Float)
 	for (auto it = int8map.begin(); it != int8map.end(); ++it)
 	{
 		for (auto it2 = floatmap.begin(); it2 != floatmap.end(); ++it2)
+		{
 			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
 	}
 }
 
@@ -132,6 +181,129 @@ TEST_F(OperandsFixture, AddInt8Double)
 	for (auto it = int8map.begin(); it != int8map.end(); ++it)
 	{
 		for (auto it2 = doublemap.begin(); it2 != doublemap.end(); ++it2)
+		{
 			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddInt16Int16)
+{
+	for (auto it = int16map.begin(); it != int16map.end(); ++it)
+	{
+		for (auto it2 = it; it2 != int16map.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddInt16Int32)
+{
+	for (auto it = int16map.begin(); it != int16map.end(); ++it)
+	{
+		for (auto it2 = int32map.begin(); it2 != int32map.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddInt16Float)
+{
+	for (auto it = int16map.begin(); it != int16map.end(); ++it)
+	{
+		for (auto it2 = floatmap.begin(); it2 != floatmap.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddInt16Double)
+{
+	for (auto it = int16map.begin(); it != int16map.end(); ++it)
+	{
+		for (auto it2 = doublemap.begin(); it2 != doublemap.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddInt32Int32)
+{
+	for (auto it = int32map.begin(); it != int32map.end(); ++it)
+	{
+		for (auto it2 = it; it2 != int32map.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddInt32Float)
+{
+	for (auto it = int32map.begin(); it != int32map.end(); ++it)
+	{
+		for (auto it2 = floatmap.begin(); it2 != floatmap.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddInt32Double)
+{
+	for (auto it = int32map.begin(); it != int32map.end(); ++it)
+	{
+		for (auto it2 = doublemap.begin(); it2 != doublemap.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddFloatFloat)
+{
+	for (auto it = floatmap.begin(); it != floatmap.end(); ++it)
+	{
+		for (auto it2 = it; it2 != floatmap.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddFloatDouble)
+{
+	for (auto it = floatmap.begin(); it != floatmap.end(); ++it)
+	{
+		for (auto it2 = doublemap.begin(); it2 != doublemap.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
+	}
+}
+
+TEST_F(OperandsFixture, AddDoubleDouble)
+{
+	for (auto it = doublemap.begin(); it != doublemap.end(); ++it)
+	{
+		for (auto it2 = doublemap.begin(); it2 != doublemap.end(); ++it2)
+		{
+			testOperandsAddition(it, it2);
+			testOperandsSubtraction(it, it2);
+		}
 	}
 }

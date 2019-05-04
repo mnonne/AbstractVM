@@ -15,8 +15,7 @@ public:
 	const OperandSizeException& operator= (const OperandSizeException& rhs);
 	OperandSizeException(const char* msg);
 
-	const char*
-	what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_USE_NOEXCEPT override ;
+	const char* getInfo() const;
 
 private:
 	const char* m_info;

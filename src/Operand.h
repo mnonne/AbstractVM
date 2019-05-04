@@ -27,12 +27,19 @@ public:
 	Operand() {}
 	Operand(T value)
 	{
+		const std::type_info& tp = typeid(T);
+		std::ostringstream strs;
 		m_value = value;
-		m_strVal = std::to_string(m_value);
+		if (tp == typeid(int8_t))
+			strs << static_cast<int16_t>(m_value);
+		else
+			strs << m_value;
+		m_strVal = strs.str();
 	}
 	virtual ~Operand() {}
 
-	virtual int getPrecision(void) const override {
+	virtual int getPrecision(void) const override
+	{
 		return getType();
 	}
 
@@ -53,24 +60,57 @@ public:
 			throw std::invalid_argument("Unhandled type");
 	}
 
-	virtual IOperand const*	operator+(IOperand const& rhs) const override {
+	virtual IOperand const*	operator+(IOperand const& rhs) const override
+	{
+		std::istringstream strs(rhs.toString());
+		std::ostringstream ostr;
 		eOperandType newType = compareOperand(rhs);
 		if (newType < Float) {
-			int64_t newVal = m_value + std::stoll(rhs.toString());
-			return FACTORY.createOperand(newType, std::to_string(newVal));
+			int64_t oldVal;
+			strs >> oldVal;
+			int64_t newVal = m_value + oldVal;
+			ostr << newVal;
+			return FACTORY.createOperand(newType, ostr.str());
 		}
 		else
 		{
-			double newVal = m_value + std::stod(rhs.toString());
-			return FACTORY.createOperand(newType, std::to_string(newVal));
+			double oldVal;
+			strs >> oldVal;
+			double newVal = m_value + oldVal;
+			ostr << newVal;
+			return FACTORY.createOperand(newType, ostr.str());
 		}
 	}
 
-	std::string const& toString(void) const override {
+	virtual IOperand const* operator-(IOperand const& rhs) const override
+	{
+		std::istringstream strs(rhs.toString());
+		std::ostringstream ostr;
+		eOperandType newType = compareOperand(rhs);
+		if (newType < Float) {
+			int64_t oldVal;
+			strs >> oldVal;
+			int64_t newVal = m_value - oldVal;
+			ostr << newVal;
+			return FACTORY.createOperand(newType, ostr.str());
+		}
+		else
+		{
+			double oldVal;
+			strs >> oldVal;
+			double newVal = m_value - oldVal;
+			ostr << newVal;
+			return FACTORY.createOperand(newType, ostr.str());
+		}
+	}
+
+	std::string const& toString(void) const override
+	{
 		return m_strVal;
 	}
 
-	eOperandType const compareOperand(IOperand const& op) const {
+	eOperandType const compareOperand(IOperand const& op) const
+	{
 		return (getPrecision() > op.getPrecision()) ? getType() : op.getType();
 	}
 
