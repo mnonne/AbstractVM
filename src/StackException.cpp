@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   OperandSizeException.cpp                           :+:      :+:    :+:   */
+/*   StackException.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aminadzh <aminadzh@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,39 +9,38 @@
 /*   Updated: 2019/05/11 16:54:00 by aminadzh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "OperandSizeException.h"
+#include "StackException.h"
 
-OperandSizeException::OperandSizeException() :
+StackException::StackException() :
 std::exception(),
-m_info("Operand size overflow of underflow")
+m_info("Invalid operation on stack")
 {
 
 }
 
-OperandSizeException::OperandSizeException(const OperandSizeException &rhs)
+StackException::StackException(const StackException &rhs)
 {
-	//TODO: implement this
+	//TODO: this
 }
 
-OperandSizeException::~OperandSizeException()
+StackException::~StackException()
 {
 
 }
 
-const OperandSizeException& OperandSizeException::operator=(const OperandSizeException &rhs)
+const StackException& StackException::operator=(const StackException &rhs)
 {
-	return OperandSizeException();
-//TODO: implement this
+	return StackException();
+	//TODO: this
 }
 
-OperandSizeException::OperandSizeException(const char *msg) :
+StackException::StackException(const char *msg) :
 m_info(msg)
 {
 
 }
 
-const char* OperandSizeException::getInfo() const
+const char* StackException::getInfo() const
 {
 	return m_info;
 }
-

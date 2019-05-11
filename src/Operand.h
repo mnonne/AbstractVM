@@ -16,6 +16,7 @@
 #include <iostream>
 
 #include "IOperand.h"
+#include "OperandSizeException.h"
 #include <exception>
 #include <iomanip>
 #include <sstream>
@@ -101,6 +102,71 @@ public:
 			double newVal = m_value - oldVal;
 			ostr << newVal;
 			return FACTORY.createOperand(newType, ostr.str());
+		}
+	}
+
+	virtual IOperand const* operator*(IOperand const& rhs) const override
+	{
+		std::istringstream strs(rhs.toString());
+		std::ostringstream ostr;
+		eOperandType newType = compareOperand(rhs);
+		if (newType < Float) {
+			int64_t oldVal;
+			strs >> oldVal;
+			int64_t newVal = m_value * oldVal;
+			ostr << newVal;
+			return FACTORY.createOperand(newType, ostr.str());
+		}
+		else
+		{
+			double oldVal;
+			strs >> oldVal;
+			double newVal = m_value * oldVal;
+			ostr << newVal;
+			return FACTORY.createOperand(newType, ostr.str());
+		}
+	}
+
+	virtual IOperand const* operator/(IOperand const& rhs) const override
+	{
+		std::istringstream strs(rhs.toString());
+		std::ostringstream ostr;
+		eOperandType newType = compareOperand(rhs);
+		if (newType < Float) {
+			int64_t oldVal;
+			strs >> oldVal;
+			if (oldVal == 0)
+				throw OperandSizeException("Division by zero"); //TODO: another exception
+			int64_t newVal = m_value / oldVal;
+			ostr << newVal;
+			return FACTORY.createOperand(newType, ostr.str());
+		}
+		else
+		{
+			double oldVal;
+			strs >> oldVal;
+			double newVal = m_value / oldVal;
+			ostr << newVal;
+			return FACTORY.createOperand(newType, ostr.str());
+		}
+	}
+
+	virtual IOperand const* operator%(IOperand const& rhs) const override
+	{
+		std::ostringstream ostr;
+		eOperandType newType = compareOperand(rhs);
+		if (newType < Float) {
+			int64_t oldVal = std::stoll(m_strVal);
+			int64_t rhsVal = std::stoll(rhs.toString());
+			if (rhsVal == 0)
+				throw OperandSizeException("Modulo by zero"); //TODO: another exception
+			int64_t newVal = oldVal % rhsVal;
+			ostr << newVal;
+			return FACTORY.createOperand(newType, ostr.str());
+		}
+		else
+		{
+			throw OperandSizeException("Modulo by floating point"); //TODO: another exception
 		}
 	}
 

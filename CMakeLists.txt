@@ -16,6 +16,6 @@ add_executable(AbstractVM
         src/Operand.h
         src/OperandFactory.cpp
         src/OperandFactory.h
-        src/OperandFactory.h src/OperandSizeException.cpp)
+        src/OperandFactory.h src/OperandSizeException.cpp unittests/test_operands2.cpp src/OperandStack.cpp src/OperandStack.h unittests/test_stack.cpp src/StackException.cpp src/StackException.h)
 
 target_link_libraries(AbstractVM gtest)

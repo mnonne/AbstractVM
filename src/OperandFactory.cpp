@@ -72,6 +72,7 @@ IOperand const *OperandFactory::createFloat(std::string const& value) const {
 	catch (std::out_of_range& e)
 	{
 		std::cout << e.what() << std::endl;
+		throw OperandSizeException("Overflow or underflow of float");
 	}
 }
 
@@ -83,5 +84,6 @@ IOperand const *OperandFactory::createDouble(std::string const& value) const {
 	catch (std::out_of_range& e)
 	{
 		std::cout << e.what() << std::endl;
+		throw OperandSizeException("Overflow or underflow of double");
 	}
 }
