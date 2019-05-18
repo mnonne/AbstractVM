@@ -40,4 +40,4 @@ add_executable(AbstractVM
         src/OperandStack.h
         src/StackException.cpp
         src/StackException.h
-        src/Parser.cpp src/Parser.h)
+        src/Parser.cpp src/Parser.h src/Lexer.cpp src/Lexer.h)

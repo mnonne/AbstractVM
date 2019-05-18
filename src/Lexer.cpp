@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Lexer.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aminadzh <aminadzh@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/14 15:14:00 by aminadzh          #+#    #+#             */
-/*   Updated: 2019/04/14 15:14:00 by aminadzh         ###   ########.fr       */
+/*   Created: 2019/05/18 19:04:00 by aminadzh          #+#    #+#             */
+/*   Updated: 2019/05/18 19:04:00 by aminadzh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "Lexer.h"
 
-#include <cstdio>
-#include "gtest/gtest.h"
-#include "Parser.h"
+Lexer::Lexer()
+{}
 
-int	main(int ac, char **av)
+Lexer::~Lexer()
+{}
+
+Command Lexer::checkSyntax(const std::string &line) const
 {
-	PARSER->readConsole();
-	return 0;
+	throw std::exception();
 }
