@@ -47,15 +47,84 @@ void OperandStack::pop()
 void OperandStack::compare(const IOperand *operand) const
 {
 	if (m_stack.back()->getType() != operand->getType() || m_stack.back()->toString() != operand->toString())
-	{
-		std::string prc1 = getOperandPrecision(m_stack.back());
-		std::string prc2 = getOperandPrecision(operand);
-		std::stringstream msg;
-		msg << std::string("Assertion of ") << m_stack.back()->toString() << " of type " <<
-			getOperandPrecision(m_stack.back()) << " with " << operand->toString() <<
-			" of type " <<  getOperandPrecision(operand);
-		throw StackException(msg.str().data());
-	}
+		throw StackException("Assertion failed");
+}
+
+void OperandStack::add()
+{
+	if (m_stack.size() < 2)
+		throw StackException("Stack size is less than 2");
+	auto op1 = m_stack.back();
+	auto op2 = m_stack[m_stack.size() - 2];
+	auto result = *op1 + *op2;
+	m_stack.pop_back();
+	m_stack.pop_back();
+	m_stack.emplace_back(result);
+}
+
+void OperandStack::sub()
+{
+	if (m_stack.size() < 2)
+		throw StackException("Stack size is less than 2");
+	auto op1 = m_stack.back();
+	auto op2 = m_stack[m_stack.size() - 2];
+	auto result = *op2 - *op1;
+	m_stack.pop_back();
+	m_stack.pop_back();
+	m_stack.emplace_back(result);
+}
+
+void OperandStack::mul()
+{
+	if (m_stack.size() < 2)
+		throw StackException("Stack size is less than 2");
+	auto op1 = m_stack.back();
+	auto op2 = m_stack[m_stack.size() - 2];
+	auto result = *op1 * *op2;
+	m_stack.pop_back();
+	m_stack.pop_back();
+	m_stack.emplace_back(result);
+}
+
+void OperandStack::div()
+{
+	if (m_stack.size() < 2)
+		throw StackException("Stack size is less than 2");
+	auto op1 = m_stack.back();
+	auto op2 = m_stack[m_stack.size() - 2];
+//	if (op2->toString() == "0")
+//		throw StackException("Division by zero");
+	auto result = *op2 / *op1;
+	m_stack.pop_back();
+	m_stack.pop_back();
+	m_stack.emplace_back(result);
+}
+
+void OperandStack::mod()
+{
+	if (m_stack.size() < 2)
+		throw StackException("Stack size is less than 2");
+	auto op1 = m_stack.back();
+	auto op2 = m_stack[m_stack.size() - 2];
+//	if (op2->toString() == "0")
+//		throw StackException("Division by zero");
+	auto result = *op2 % *op1;
+	m_stack.pop_back();
+	m_stack.pop_back();
+	m_stack.emplace_back(result);
+}
+
+void OperandStack::print() const
+{
+	if (m_stack.back()->getType() != Int8)
+		throw StackException("Non printable");
+	int8_t ch = std::stoi(m_stack.back()->toString());
+	std::cout << ch << std::endl;
+}
+
+size_t OperandStack::size() const
+{
+	return m_stack.size();
 }
 
 std::string OperandStack::getOperandPrecision(const IOperand *operand) const

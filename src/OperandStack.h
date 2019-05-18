@@ -26,6 +26,14 @@ public:
 	void dump() const;
 	void pop();
 	void compare(const IOperand* operand) const;
+	void add();
+	void sub();
+	void mul();
+	void div();
+	void mod();
+	void print() const;
+
+	size_t size() const;
 private:
 	std::string getOperandPrecision(const IOperand* operand) const;
 	std::deque<const IOperand*> m_stack;
