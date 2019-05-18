@@ -71,7 +71,7 @@ public:
 			strs >> oldVal;
 			int64_t newVal = m_value + oldVal;
 			ostr << newVal;
-			return FACTORY.createOperand(newType, ostr.str());
+			return FACTORY->createOperand(newType, ostr.str());
 		}
 		else
 		{
@@ -79,7 +79,7 @@ public:
 			strs >> oldVal;
 			double newVal = m_value + oldVal;
 			ostr << newVal;
-			return FACTORY.createOperand(newType, ostr.str());
+			return FACTORY->createOperand(newType, ostr.str());
 		}
 	}
 
@@ -93,7 +93,7 @@ public:
 			strs >> oldVal;
 			int64_t newVal = m_value - oldVal;
 			ostr << newVal;
-			return FACTORY.createOperand(newType, ostr.str());
+			return FACTORY->createOperand(newType, ostr.str());
 		}
 		else
 		{
@@ -101,7 +101,7 @@ public:
 			strs >> oldVal;
 			double newVal = m_value - oldVal;
 			ostr << newVal;
-			return FACTORY.createOperand(newType, ostr.str());
+			return FACTORY->createOperand(newType, ostr.str());
 		}
 	}
 
@@ -115,7 +115,7 @@ public:
 			strs >> oldVal;
 			int64_t newVal = m_value * oldVal;
 			ostr << newVal;
-			return FACTORY.createOperand(newType, ostr.str());
+			return FACTORY->createOperand(newType, ostr.str());
 		}
 		else
 		{
@@ -123,7 +123,7 @@ public:
 			strs >> oldVal;
 			double newVal = m_value * oldVal;
 			ostr << newVal;
-			return FACTORY.createOperand(newType, ostr.str());
+			return FACTORY->createOperand(newType, ostr.str());
 		}
 	}
 
@@ -139,7 +139,7 @@ public:
 				throw OperandSizeException("Division by zero"); //TODO: another exception
 			int64_t newVal = m_value / oldVal;
 			ostr << newVal;
-			return FACTORY.createOperand(newType, ostr.str());
+			return FACTORY->createOperand(newType, ostr.str());
 		}
 		else
 		{
@@ -147,7 +147,7 @@ public:
 			strs >> oldVal;
 			double newVal = m_value / oldVal;
 			ostr << newVal;
-			return FACTORY.createOperand(newType, ostr.str());
+			return FACTORY->createOperand(newType, ostr.str());
 		}
 	}
 
@@ -162,7 +162,7 @@ public:
 				throw OperandSizeException("Modulo by zero"); //TODO: another exception
 			int64_t newVal = oldVal % rhsVal;
 			ostr << newVal;
-			return FACTORY.createOperand(newType, ostr.str());
+			return FACTORY->createOperand(newType, ostr.str());
 		}
 		else
 		{

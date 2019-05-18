@@ -39,4 +39,5 @@ add_executable(AbstractVM
         src/OperandStack.cpp
         src/OperandStack.h
         src/StackException.cpp
-        src/StackException.h src/Lexer.cpp src/Lexer.h)
+        src/StackException.h
+        src/Parser.cpp src/Parser.h)

@@ -27,10 +27,11 @@ OperandFactory::funPtrs OperandFactory::m_creators[] = {
 		&OperandFactory::createDouble
 };
 
-OperandFactory&
+OperandFactory*
 OperandFactory::getInstance() {
-	static OperandFactory instance;
-	return instance;
+	if (!m_instance)
+		m_instance = new OperandFactory();
+	return m_instance;
 }
 
 IOperand const *OperandFactory::createOperand(eOperandType type, std::string const value) const {

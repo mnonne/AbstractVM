@@ -41,38 +41,38 @@ protected:
 
 TEST_F(Int8Fixture, Type)
 {
-	auto op1 = FACTORY.createOperand(Int8, m_pos);
+	auto op1 = FACTORY->createOperand(Int8, m_pos);
 	ASSERT_EQ(op1->getType(), Int8);
-	auto op2 = FACTORY.createOperand(Int8, m_neg);
+	auto op2 = FACTORY->createOperand(Int8, m_neg);
 	ASSERT_EQ(op2->getType(), Int8);
-	auto op3 = FACTORY.createOperand(Int8, m_min);
+	auto op3 = FACTORY->createOperand(Int8, m_min);
 	ASSERT_EQ(op3->getType(), Int8);
-	auto op4 = FACTORY.createOperand(Int8, m_max);
+	auto op4 = FACTORY->createOperand(Int8, m_max);
 	ASSERT_EQ(op4->getType(), Int8);
-	ASSERT_THROW(auto op5 = FACTORY.createOperand(Int8, m_underflow);, OperandSizeException);
-	ASSERT_THROW(auto op6 = FACTORY.createOperand(Int8, m_overflow);, OperandSizeException);
+	ASSERT_THROW(auto op5 = FACTORY->createOperand(Int8, m_underflow);, OperandSizeException);
+	ASSERT_THROW(auto op6 = FACTORY->createOperand(Int8, m_overflow);, OperandSizeException);
 }
 
 TEST_F(Int8Fixture, Precision)
 {
-	auto op1 = FACTORY.createOperand(Int8, m_pos);
+	auto op1 = FACTORY->createOperand(Int8, m_pos);
 	ASSERT_EQ(op1->getPrecision(), 0);
-	auto op2 = FACTORY.createOperand(Int8, m_neg);
+	auto op2 = FACTORY->createOperand(Int8, m_neg);
 	ASSERT_EQ(op2->getPrecision(), 0);
-	auto op3 = FACTORY.createOperand(Int8, m_min);
+	auto op3 = FACTORY->createOperand(Int8, m_min);
 	ASSERT_EQ(op3->getPrecision(), 0);
-	auto op4 = FACTORY.createOperand(Int8, m_max);
+	auto op4 = FACTORY->createOperand(Int8, m_max);
 	ASSERT_EQ(op4->getPrecision(), 0);
 }
 
 TEST_F(Int8Fixture, ToString)
 {
-	auto op1 = FACTORY.createOperand(Int8, m_pos);
+	auto op1 = FACTORY->createOperand(Int8, m_pos);
 	ASSERT_STREQ(m_pos.c_str(), op1->toString().c_str());
-	auto op2 = FACTORY.createOperand(Int8, m_neg);
+	auto op2 = FACTORY->createOperand(Int8, m_neg);
 	ASSERT_STREQ(m_neg.c_str(), op2->toString().c_str());
-	auto op3 = FACTORY.createOperand(Int8, m_min);
+	auto op3 = FACTORY->createOperand(Int8, m_min);
 	ASSERT_STREQ(m_min.c_str(), op3->toString().c_str());
-	auto op4 = FACTORY.createOperand(Int8, m_max);
+	auto op4 = FACTORY->createOperand(Int8, m_max);
 	ASSERT_STREQ(m_max.c_str(), op4->toString().c_str());
 }

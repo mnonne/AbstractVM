@@ -21,34 +21,34 @@ class OperandsFixture2 : public  ::testing::Test {
 public:
 	OperandsFixture2() :
 	int8map{
-			{FACTORY.createOperand(Int8, "42"), 42},
-			{FACTORY.createOperand(Int8, "24"), 24},
-			{FACTORY.createOperand(Int8, "100"), 100},
-			{FACTORY.createOperand(Int8, "-4"), -4}
+			{FACTORY->createOperand(Int8, "42"), 42},
+			{FACTORY->createOperand(Int8, "24"), 24},
+			{FACTORY->createOperand(Int8, "100"), 100},
+			{FACTORY->createOperand(Int8, "-4"), -4}
 	},
 	int16map{
-			{FACTORY.createOperand(Int16, "255"), 255},
-			{FACTORY.createOperand(Int16, "2555"), 2555},
-			{FACTORY.createOperand(Int16, "0"), 0},
-			{FACTORY.createOperand(Int16, "-22255"), -22255}
+			{FACTORY->createOperand(Int16, "255"), 255},
+			{FACTORY->createOperand(Int16, "2555"), 2555},
+			{FACTORY->createOperand(Int16, "0"), 0},
+			{FACTORY->createOperand(Int16, "-22255"), -22255}
 	},
 	int32map{
-			{FACTORY.createOperand(Int32, "66"), 66},
-			{FACTORY.createOperand(Int32, "-666"), -666},
-			{FACTORY.createOperand(Int32, "6666"), 6666},
-			{FACTORY.createOperand(Int32, "6"), 6}
+			{FACTORY->createOperand(Int32, "66"), 66},
+			{FACTORY->createOperand(Int32, "-666"), -666},
+			{FACTORY->createOperand(Int32, "6666"), 6666},
+			{FACTORY->createOperand(Int32, "6"), 6}
 	},
 	floatmap{
-			{FACTORY.createOperand(Float, "42.42"), 42.42f},
-			{FACTORY.createOperand(Float, "2.42"), 2.42f},
-			{FACTORY.createOperand(Float, "-42.42"), -42.42f},
-			{FACTORY.createOperand(Float, "-2.42"), -2.42f}
+			{FACTORY->createOperand(Float, "42.42"), 42.42f},
+			{FACTORY->createOperand(Float, "2.42"), 2.42f},
+			{FACTORY->createOperand(Float, "-42.42"), -42.42f},
+			{FACTORY->createOperand(Float, "-2.42"), -2.42f}
 	},
 	doublemap{
-			{FACTORY.createOperand(Double, "42.424"), 42.424},
-			{FACTORY.createOperand(Double, "42.424"), 42.424},
-			{FACTORY.createOperand(Double, "-42.424"), -42.424},
-			{FACTORY.createOperand(Double, "-2.424"), -2.424}
+			{FACTORY->createOperand(Double, "42.424"), 42.424},
+			{FACTORY->createOperand(Double, "42.424"), 42.424},
+			{FACTORY->createOperand(Double, "-42.424"), -42.424},
+			{FACTORY->createOperand(Double, "-2.424"), -2.424}
 	}
 	{}
 

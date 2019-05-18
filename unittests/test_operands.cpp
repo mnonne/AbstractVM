@@ -21,30 +21,30 @@ class OperandsFixture : public ::testing::Test {
 public:
 	OperandsFixture() :
 	int8map{
-			{FACTORY.createOperand(Int8, "42"), 42},
-			{FACTORY.createOperand(Int8, "-25"), -25},
-			{FACTORY.createOperand(Int8, std::to_string(INT8_MIN)), INT8_MIN},
-			{FACTORY.createOperand(Int8, std::to_string(INT8_MAX)), INT8_MAX}
+			{FACTORY->createOperand(Int8, "42"), 42},
+			{FACTORY->createOperand(Int8, "-25"), -25},
+			{FACTORY->createOperand(Int8, std::to_string(INT8_MIN)), INT8_MIN},
+			{FACTORY->createOperand(Int8, std::to_string(INT8_MAX)), INT8_MAX}
 	},
 	int16map{
-			{FACTORY.createOperand(Int16, "4200"), 4200},
-			{FACTORY.createOperand(Int16, "-2500"), -2500},
-			{FACTORY.createOperand(Int16, std::to_string(INT16_MIN)), INT16_MIN},
-			{FACTORY.createOperand(Int16, std::to_string(INT16_MAX)), INT16_MAX}
+			{FACTORY->createOperand(Int16, "4200"), 4200},
+			{FACTORY->createOperand(Int16, "-2500"), -2500},
+			{FACTORY->createOperand(Int16, std::to_string(INT16_MIN)), INT16_MIN},
+			{FACTORY->createOperand(Int16, std::to_string(INT16_MAX)), INT16_MAX}
 	},
 	int32map{
-			{FACTORY.createOperand(Int32, "42000"), 42000},
-			{FACTORY.createOperand(Int32, "-25000"), -25000},
-			{FACTORY.createOperand(Int32, std::to_string(INT32_MIN)), INT32_MIN},
-			{FACTORY.createOperand(Int32, std::to_string(INT32_MAX)), INT32_MAX},
+			{FACTORY->createOperand(Int32, "42000"), 42000},
+			{FACTORY->createOperand(Int32, "-25000"), -25000},
+			{FACTORY->createOperand(Int32, std::to_string(INT32_MIN)), INT32_MIN},
+			{FACTORY->createOperand(Int32, std::to_string(INT32_MAX)), INT32_MAX},
 	},
 	floatmap{
-			{FACTORY.createOperand(Float, "42.42"), 42.42f},
-			{FACTORY.createOperand(Float, "-25.42"), -25.42f}
+			{FACTORY->createOperand(Float, "42.42"), 42.42f},
+			{FACTORY->createOperand(Float, "-25.42"), -25.42f}
 	},
 	doublemap{
-			{FACTORY.createOperand(Double, "42.42"), 42.42},
-			{FACTORY.createOperand(Double, "-25.42"), -25.42}
+			{FACTORY->createOperand(Double, "42.42"), 42.42},
+			{FACTORY->createOperand(Double, "-25.42"), -25.42}
 	}
 	{
 	}

@@ -24,7 +24,7 @@ public:
 	OperandFactory(const OperandFactory&) = delete;
 	OperandFactory& operator=(OperandFactory&) = delete;
 
-	static OperandFactory&	getInstance();
+	static OperandFactory*	getInstance();
 	IOperand const*			createOperand(eOperandType type, std::string const value) const;
 
 private:
