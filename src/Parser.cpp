@@ -29,9 +29,10 @@ std::vector<Command> Parser::readConsole() const
 {
 	std::vector<Command> buf;
 	std::string line;
-	int lNumber;
+	int lNumber = 0;
 	while (line != ";;")
 	{
+		lNumber++;
 		std::getline(std::cin, line);
 		try {
 			Command instr = m_Lexer.checkSyntax(line);
@@ -40,7 +41,6 @@ std::vector<Command> Parser::readConsole() const
 		{
 			std::cout << "Line " << lNumber << std::endl;
 		}
-		lNumber++;
 	}
 	return buf;
 }
