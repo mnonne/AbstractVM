@@ -15,10 +15,10 @@ public:
 	const OperandSizeException& operator= (const OperandSizeException& rhs);
 	OperandSizeException(const char* msg);
 
-	const char* getInfo() const;
+	virtual const char* what() const _NOEXCEPT override ;
 
 private:
-	const char* m_info;
+	const char* m_Info;
 };
 
 

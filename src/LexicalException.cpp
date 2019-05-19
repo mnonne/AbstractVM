@@ -1,47 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   OperandSizeException.cpp                           :+:      :+:    :+:   */
+/*   LexicalException.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aminadzh <aminadzh@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/11 16:54:00 by aminadzh          #+#    #+#             */
-/*   Updated: 2019/05/11 16:54:00 by aminadzh         ###   ########.fr       */
+/*   Created: 2019/05/19 18:07:00 by aminadzh          #+#    #+#             */
+/*   Updated: 2019/05/19 18:07:00 by aminadzh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "OperandSizeException.h"
+#include "LexicalException.h"
 
-OperandSizeException::OperandSizeException() :
+LexicalException::LexicalException() :
 	std::exception(),
-	m_Info("Operand size overflow of underflow")
+	m_Info("Lexical exception")
 {
-
 }
 
-OperandSizeException::OperandSizeException(const OperandSizeException &rhs)
+LexicalException::LexicalException(const LexicalException &rhs)
 {
 	m_Info = rhs.what();
 }
 
-OperandSizeException::~OperandSizeException()
+LexicalException::~LexicalException()
 {
 
 }
 
-const OperandSizeException& OperandSizeException::operator=(const OperandSizeException &rhs)
+LexicalException &LexicalException::operator=(const LexicalException &rhs)
 {
 	m_Info = rhs.what();
 	return *this;
 }
 
-OperandSizeException::OperandSizeException(const char *msg) :
+LexicalException::LexicalException(const char *msg) :
 	m_Info(msg),
 	std::exception()
 {
 
 }
 
-const char *OperandSizeException::what() const _NOEXCEPT
+const char *LexicalException::what() const _NOEXCEPT
 {
 	return m_Info;
 }

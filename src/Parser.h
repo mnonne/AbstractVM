@@ -14,6 +14,7 @@
 
 #include <vector>
 #include "Lexer.h"
+#include "OperandStack.h"
 
 #define PARSER Parser::getInstance()
 
@@ -24,14 +25,16 @@ public:
 
 	static Parser* getInstance();
 
-	std::vector<Command> readConsole() const;
+	void readConsole();
+	void parseCommands(OperandStack& stack) const;
 
 private:
 	Parser();
+	void checkExitStatus() const;
 
 	static Parser* m_Instance;
 	Lexer m_Lexer;
+	std::vector<Command> m_Commands;
 };
-
 
 #endif //ABSTRACTVM_PARSER_H

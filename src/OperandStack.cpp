@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "OperandStack.h"
 #include "StackException.h"
+#include "OperandSizeException.h"
 #include <iostream>
 #include <sstream>
 
@@ -92,8 +93,6 @@ void OperandStack::div()
 		throw StackException("Stack size is less than 2");
 	auto op1 = m_stack.back();
 	auto op2 = m_stack[m_stack.size() - 2];
-//	if (op2->toString() == "0")
-//		throw StackException("Division by zero");
 	auto result = *op2 / *op1;
 	m_stack.pop_back();
 	m_stack.pop_back();
@@ -106,8 +105,6 @@ void OperandStack::mod()
 		throw StackException("Stack size is less than 2");
 	auto op1 = m_stack.back();
 	auto op2 = m_stack[m_stack.size() - 2];
-//	if (op2->toString() == "0")
-//		throw StackException("Division by zero");
 	auto result = *op2 % *op1;
 	m_stack.pop_back();
 	m_stack.pop_back();

@@ -12,6 +12,10 @@
 #include "Parser.h"
 #include <iostream>
 #include <string>
+#include "OperandFactory.h"
+#include "LexicalException.h"
+#include "OperandSizeException.h"
+#include "StackException.h"
 
 Parser* Parser::m_Instance = 0;
 
@@ -25,22 +29,155 @@ Parser* Parser::getInstance()
 	return m_Instance;
 }
 
-std::vector<Command> Parser::readConsole() const
+void Parser::readConsole()
 {
-	std::vector<Command> buf;
 	std::string line;
+	Command instr;
 	int lNumber = 0;
 	while (line != ";;")
 	{
 		lNumber++;
 		std::getline(std::cin, line);
 		try {
-			Command instr = m_Lexer.checkSyntax(line);
+			instr = m_Lexer.checkSyntax(line);
+			instr.lNumber = lNumber;
 		}
-		catch (std::exception& e) //TODO: catch another type of exception
+		catch (LexicalException& e) //TODO: catch another type of exception
 		{
-			std::cout << "Line " << lNumber << std::endl;
+			std::cout << "Line " << lNumber << ": " << e.what() << std::endl;
+			continue;
+		}
+		if (instr.instr != comment)
+			m_Commands.push_back(instr);
+	}
+}
+
+void Parser::parseCommands(OperandStack &stack) const
+{
+	checkExitStatus();
+	for (auto it = m_Commands.begin(); it != m_Commands.end() && it->instr != finish; ++it)
+	{
+		switch(it->instr)
+		{
+			case push:
+				try {
+					stack.push(FACTORY->createOperand(it->type, it->value));
+				}
+				catch (OperandSizeException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			case pop:
+				try {
+					stack.pop();
+				}
+				catch (StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			case dump:
+				try {
+					stack.dump();
+				}
+				catch (StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			case assert:
+				try {
+					stack.compare(FACTORY->createOperand(it->type, it->value));
+				}
+				catch (StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			case add:
+				try {
+					stack.add();
+				}
+				catch (StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				catch (OperandSizeException&e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			case subtract:
+				try {
+					stack.sub();
+				}
+				catch (StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			case multiply:
+				try {
+					stack.mul();
+				}
+				catch (StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			case divide:
+				try {
+					stack.div();
+				}
+				catch (StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				catch (OperandSizeException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			case modulo:
+				try {
+					stack.mod();
+				}
+				catch (StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				catch (OperandSizeException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			case print:
+				try {
+					stack.print();
+				}
+				catch (StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				break;
+			default:
+				break;
 		}
 	}
-	return buf;
+}
+
+void Parser::checkExitStatus() const
+{
+	bool found = false;
+	for (auto it = m_Commands.end(); it != m_Commands.begin(); --it)
+	{
+		if (it->instr == finish)
+		{
+			found = true;
+			break;
+		}
+	}
+	if (!found)
+		throw StackException("The program has no wxit status");
 }

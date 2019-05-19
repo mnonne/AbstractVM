@@ -12,15 +12,15 @@
 #include "StackException.h"
 
 StackException::StackException() :
-std::exception(),
-m_info("Invalid operation on stack")
+	std::exception(),
+	m_Info("Invalid operation on stack")
 {
 
 }
 
 StackException::StackException(const StackException &rhs)
 {
-	//TODO: this
+	m_Info = rhs.what();
 }
 
 StackException::~StackException()
@@ -30,17 +30,18 @@ StackException::~StackException()
 
 const StackException& StackException::operator=(const StackException &rhs)
 {
-	return StackException();
-	//TODO: this
+	m_Info = rhs.what();
+	return *this;
 }
 
 StackException::StackException(const char *msg) :
-m_info(msg)
+	m_Info(msg),
+	std::exception()
 {
 
 }
 
-const char* StackException::getInfo() const
+const char *StackException::what() const _NOEXCEPT
 {
-	return m_info;
+	return m_Info;
 }
