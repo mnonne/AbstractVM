@@ -17,7 +17,7 @@
 #include <regex>
 
 enum instruction {
-	push, pop, dump, assert, add, subtract, multiply, divide, modulo, print, finish, comment
+	push, pop, dump, assert, add, subtract, multiply, divide, modulo, print, finish, comment, last
 };
 
 struct Command

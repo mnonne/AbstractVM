@@ -1,0 +1,27 @@
+; -----------
+; test1.avm -
+; expected: -
+; 3337.5 ----
+; 42.2 ------
+; 42 --------
+; -----------
+
+push int32(42)
+push int32(33)
+
+add
+
+push float(44.5)
+
+mul
+
+push double(42.42)
+push int32(42)
+
+dump
+
+pop
+
+assert double(42.42)
+
+exit

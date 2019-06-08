@@ -25,7 +25,8 @@ public:
 
 	static Parser* getInstance();
 
-	void readConsole();
+	void readInput();
+	void readInput(const char *filePath);
 	void parseCommands(OperandStack& stack) const;
 
 private:

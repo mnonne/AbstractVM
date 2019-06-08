@@ -12,6 +12,7 @@
 #include "Parser.h"
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "OperandFactory.h"
 #include "LexicalException.h"
 #include "OperandSizeException.h"
@@ -29,20 +30,53 @@ Parser* Parser::getInstance()
 	return m_Instance;
 }
 
-void Parser::readConsole()
+void Parser::readInput()
 {
 	std::string line;
 	Command instr;
 	int lNumber = 0;
 	while (line != ";;")
 	{
+		size_t column = line.find(";");
+		if (column != std::string::npos)
+			line = line.substr(0, column);
 		lNumber++;
 		std::getline(std::cin, line);
+		if (line.empty())
+			continue;
 		try {
 			instr = m_Lexer.checkSyntax(line);
 			instr.lNumber = lNumber;
 		}
-		catch (LexicalException& e) //TODO: catch another type of exception
+		catch (LexicalException& e)
+		{
+			std::cout << "Line " << lNumber << ": " << e.what() << std::endl;
+			continue;
+		}
+		if (instr.instr != comment)
+			m_Commands.push_back(instr);
+	}
+}
+
+void Parser::readInput(const char *filePath)
+{
+	std::ifstream infile(filePath);
+	std::string line;
+	Command instr;
+	int lNumber = 0;
+	while (std::getline(infile, line))
+	{
+		size_t column = line.find(";");
+		if (column != std::string::npos)
+			line = line.substr(0, column);
+		lNumber++;
+		if (line.empty())
+			continue;
+		try {
+			instr = m_Lexer.checkSyntax(line);
+			instr.lNumber = lNumber;
+		}
+		catch (LexicalException& e)
 		{
 			std::cout << "Line " << lNumber << ": " << e.what() << std::endl;
 			continue;
@@ -54,8 +88,8 @@ void Parser::readConsole()
 
 void Parser::parseCommands(OperandStack &stack) const
 {
-	checkExitStatus();
-	for (auto it = m_Commands.begin(); it != m_Commands.end() && it->instr != finish; ++it)
+	bool isEndig = false;
+	for (auto it = m_Commands.begin(); it != m_Commands.end(); ++it)
 	{
 		switch(it->instr)
 		{
@@ -161,23 +195,13 @@ void Parser::parseCommands(OperandStack &stack) const
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
 				break;
+			case finish:
+				isEndig = true;
+				break;
 			default:
 				break;
 		}
 	}
-}
-
-void Parser::checkExitStatus() const
-{
-	bool found = false;
-	for (auto it = m_Commands.end(); it != m_Commands.begin(); --it)
-	{
-		if (it->instr == finish)
-		{
-			found = true;
-			break;
-		}
-	}
-	if (!found)
-		throw StackException("The program has no wxit status");
+	if (!isEndig)
+		throw StackException("The program has no exit status");
 }

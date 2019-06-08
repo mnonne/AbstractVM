@@ -42,8 +42,8 @@ Command Lexer::checkSyntax(const std::string &line) const
 	Command command;
 	if (std::regex_match(line.c_str(), m, m_Push))
 	{
-		command.instr = push;
 		command.type = findType(line.substr(line.find("push") + 4));
+		command.instr = push;
 		command.value = findValue(line);
 	}
 	else if (std::regex_match(line.c_str(), m, m_Pop))

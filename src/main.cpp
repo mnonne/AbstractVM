@@ -19,7 +19,10 @@
 int	main(int ac, char **av)
 {
 	OperandStack stack;
-	PARSER->readConsole();
+	if (ac < 2)
+		PARSER->readInput();
+	else
+		PARSER->readInput(av[1]);
 	try {
 		PARSER->parseCommands(stack);
 	}
