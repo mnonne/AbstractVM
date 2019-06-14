@@ -41,7 +41,7 @@ StackException::StackException(const char *msg) :
 
 }
 
-const char *StackException::what() const _NOEXCEPT
+const char *StackException::what() const noexcept
 {
 	return m_Info;
 }

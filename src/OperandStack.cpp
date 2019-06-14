@@ -113,6 +113,8 @@ void OperandStack::mod()
 
 void OperandStack::print() const
 {
+	if (m_stack.empty())
+		throw StackException("Print on empty stack");
 	if (m_stack.back()->getType() != Int8)
 		throw StackException("Non printable");
 	int8_t ch = std::stoi(m_stack.back()->toString());

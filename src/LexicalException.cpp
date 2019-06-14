@@ -40,7 +40,7 @@ LexicalException::LexicalException(const char *msg) :
 
 }
 
-const char *LexicalException::what() const _NOEXCEPT
+const char *LexicalException::what() const noexcept
 {
 	return m_Info;
 }

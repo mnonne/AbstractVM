@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cstdio>
-#include "gtest/gtest.h"
+#include <iostream>
 #include "Parser.h"
 #include "OperandStack.h"
 #include "StackException.h"

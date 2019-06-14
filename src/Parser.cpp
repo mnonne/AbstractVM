@@ -35,13 +35,15 @@ void Parser::readInput()
 	std::string line;
 	Command instr;
 	int lNumber = 0;
-	while (line != ";;")
+	while (true)
 	{
-		size_t column = line.find(";");
-		if (column != std::string::npos)
-			line = line.substr(0, column);
 		lNumber++;
 		std::getline(std::cin, line);
+		if (line == ";;")
+			break;
+		size_t column = line.find(";");
+		if (column != std::string::npos)
+			line.erase(column);
 		if (line.empty())
 			continue;
 		try {
@@ -50,7 +52,7 @@ void Parser::readInput()
 		}
 		catch (LexicalException& e)
 		{
-			std::cout << "Line " << lNumber << ": " << e.what() << std::endl;
+			std::cout << "Line " << lNumber << ": ERROR " << e.what() << std::endl;
 			continue;
 		}
 		if (instr.instr != comment)
@@ -66,10 +68,10 @@ void Parser::readInput(const char *filePath)
 	int lNumber = 0;
 	while (std::getline(infile, line))
 	{
+		lNumber++;
 		size_t column = line.find(";");
 		if (column != std::string::npos)
-			line = line.substr(0, column);
-		lNumber++;
+			line.erase(column);
 		if (line.empty())
 			continue;
 		try {

@@ -41,7 +41,7 @@ OperandSizeException::OperandSizeException(const char *msg) :
 
 }
 
-const char *OperandSizeException::what() const _NOEXCEPT
+const char *OperandSizeException::what() const noexcept
 {
 	return m_Info;
 }

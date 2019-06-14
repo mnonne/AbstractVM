@@ -23,7 +23,7 @@ public:
 	LexicalException& operator= (const LexicalException& rhs);
 	LexicalException(const char* msg);
 
-	virtual const char* what() const _NOEXCEPT override ;
+	virtual const char* what() const noexcept override;
 
 private:
 	const char* m_Info;
