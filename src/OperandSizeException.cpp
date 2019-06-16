@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "OperandSizeException.h"
-#include <iostream>
 
 OperandSizeException::OperandSizeException() :
 	std::out_of_range("Operand size overflow of underflow")

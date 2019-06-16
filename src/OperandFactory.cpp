@@ -39,40 +39,54 @@ IOperand const *OperandFactory::createOperand(eOperandType type, std::string con
 }
 
 IOperand const *OperandFactory::createInt8(std::string const& value) const {
-	int64_t val = std::stoll(value);
-	if (val > INT8_MAX)
-		throw OperandSizeException("Overflow of Int8");
-	else if (val < INT8_MIN)
-		throw OperandSizeException("Underflow of Int8");
-	return new Operand<int8_t>(val);
-}
-
-IOperand const *OperandFactory::createInt16(std::string const& value) const {
-	int64_t val;
 	try
 	{
-		val = std::stoll(value);
+		int64_t val = std::stoll(value);
+		if (val > INT8_MAX)
+			throw OperandSizeException("Overflow of Int8");
+		else if (val < INT8_MIN)
+			throw OperandSizeException("Underflow of Int8");
+		return new Operand<int8_t>(val);
 	}
 	catch(const std::out_of_range& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::string msg = value + " is out of Int8 range";
+		throw OperandSizeException(msg.data());
+	}
+}
+
+IOperand const *OperandFactory::createInt16(std::string const& value) const {
+	try
+	{
+		int64_t val = std::stoll(value);
+		if (val > INT16_MAX)
+			throw OperandSizeException("Overflow of Int16");
+		else if (val < INT16_MIN)
+			throw OperandSizeException("Underflow of Int16");
+		return new Operand<int16_t>(val);
+	}
+	catch(const std::out_of_range& e)
+	{
 		std::string msg = value + " is out of Int16 range";
 		throw OperandSizeException(msg.data());
 	}
-	if (val > INT16_MAX)
-		throw OperandSizeException("Overflow of Int16");
-	else if (val < INT16_MIN)
-		throw OperandSizeException("Underflow of Int16");
-	return new Operand<int16_t>(val);
 }
 
 IOperand const *OperandFactory::createInt32(std::string const& value) const {
-	int64_t val = std::stoll(value);
-	if (val > INT32_MAX)
-		throw OperandSizeException("Overflow of Int32");
-	else if (val < INT32_MIN)
-		throw OperandSizeException("Underflow of Int32");
-	return new Operand<int32_t>(val);
+	try
+	{
+		int64_t val = std::stoll(value);
+		if (val > INT32_MAX)
+			throw OperandSizeException("Overflow of Int32");
+		else if (val < INT32_MIN)
+			throw OperandSizeException("Underflow of Int32");
+		return new Operand<int32_t>(val);
+	}
+	catch(const std::out_of_range& e)
+	{
+		std::string msg = value + " is out of Int32 range";
+		throw OperandSizeException(msg.data());
+	}
 }
 
 IOperand const *OperandFactory::createFloat(std::string const& value) const {
@@ -83,20 +97,20 @@ IOperand const *OperandFactory::createFloat(std::string const& value) const {
 	}
 	catch (std::out_of_range& e)
 	{
-		std::cout << e.what() << std::endl;
-		throw OperandSizeException("Overflow or underflow of float");
+		std::string msg = value + " is out of Float range";
+		throw OperandSizeException(msg.data());
 	}
 }
 
 IOperand const *OperandFactory::createDouble(std::string const& value) const {
 	try
 	{
-		float val = std::stod(value);
+		double val = std::stod(value);
 		return new Operand<double>(val);
 	}
 	catch (std::out_of_range& e)
 	{
-		std::cout << e.what() << std::endl;
-		throw OperandSizeException("Overflow or underflow of double");
+		std::string msg = value + " is out of Double range";
+		throw OperandSizeException(msg.data());
 	}
 }

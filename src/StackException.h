@@ -14,20 +14,14 @@
 
 #include <stdexcept>
 
-class StackException : public std::exception
+class StackException : public std::logic_error
 {
 public:
 	StackException();
 	StackException(const StackException& rhs);
 	virtual ~StackException();
-	const StackException& operator=(const StackException& rhs);
+	const StackException& operator=(const StackException& rhs) = delete;
 	StackException(const char* msg);
-
-	virtual const char* what() const noexcept override;
-
-private:
-	const char* m_Info;
-
 };
 
 
