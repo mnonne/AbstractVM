@@ -1,0 +1,54 @@
+; ---------------
+; Hello World
+; ---------------
+
+push int8(42)
+print ; *
+
+push int8(30)
+add
+print ; H
+
+push int8(29)
+add
+print ; e
+
+push int8(7)
+add
+print ; l
+print ; l
+
+push int8(3)
+add
+print ; o
+
+push int8(69)
+sub
+print ; *
+
+push int8(45)
+add
+print ; W
+
+push int8(24)
+add
+print ; o
+
+push int8(3)
+add
+print ; r
+
+push int8(6)
+sub
+print ; l
+
+push int8(8)
+sub
+print ; d
+
+push int8(58)
+sub
+print ; *
+
+exit
+

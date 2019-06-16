@@ -144,12 +144,20 @@ void Parser::parseCommands(OperandStack &stack) const
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
+				catch (const OperandSizeException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
 				break;
 			case assert:
 				try {
 					stack.compare(FACTORY->createOperand(it->type, it->value));
 				}
 				catch (const StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				catch (const OperandSizeException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -175,12 +183,20 @@ void Parser::parseCommands(OperandStack &stack) const
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
+				catch (const OperandSizeException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
 				break;
 			case multiply:
 				try {
 					stack.mul();
 				}
 				catch (const StackException& e)
+				{
+					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
+				}
+				catch (const OperandSizeException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
