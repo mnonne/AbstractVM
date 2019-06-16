@@ -31,7 +31,9 @@ struct Command
 class Lexer {
 public:
 	Lexer();
-	~Lexer(); //TODO: copline form
+	~Lexer();
+	Lexer(const Lexer& rhs) = delete;
+	Lexer& operator= (const Lexer& rhs) = delete;
 
 	Command checkSyntax(const std::string& line) const;
 

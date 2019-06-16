@@ -12,6 +12,7 @@
 #include "Parser.h"
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include "OperandFactory.h"
 #include "LexicalException.h"
@@ -38,6 +39,7 @@ void Parser::readInput()
 	while (true)
 	{
 		lNumber++;
+		std::cout << lNumber << " ";
 		std::getline(std::cin, line);
 		if (line == ";;")
 			break;
@@ -62,29 +64,50 @@ void Parser::readInput()
 
 void Parser::readInput(const char *filePath)
 {
-	std::ifstream infile(filePath);
+	std::ifstream infile;
 	std::string line;
 	Command instr;
 	int lNumber = 0;
-	while (std::getline(infile, line))
+	
+	infile.exceptions(std::ifstream::badbit);
+	try
 	{
-		lNumber++;
-		size_t column = line.find(";");
-		if (column != std::string::npos)
-			line.erase(column);
-		if (line.empty())
-			continue;
-		try {
-			instr = m_Lexer.checkSyntax(line);
-			instr.lNumber = lNumber;
-		}
-		catch (LexicalException& e)
+		infile.open(filePath);
+		if (!infile.is_open())
 		{
-			std::cout << "Line " << lNumber << ": " << e.what() << std::endl;
-			continue;
+			std::stringstream msg;
+			msg << "Unable to open " << filePath;
+			throw StackException(msg.str().data());
 		}
-		if (instr.instr != comment)
-			m_Commands.push_back(instr);
+		while (std::getline(infile, line))
+		{
+			lNumber++;
+			size_t column = line.find(";");
+			if (column != std::string::npos)
+				line.erase(column);
+			if (line.empty())
+				continue;
+			try {
+				instr = m_Lexer.checkSyntax(line);
+				instr.lNumber = lNumber;
+			}
+			catch (LexicalException& e)
+			{
+				std::cout << "Line " << lNumber << ": " << e.what() << std::endl;
+				continue;
+			}
+			if (instr.instr != comment)
+				m_Commands.push_back(instr);
+		}
+	}
+	catch(const std::ifstream::failure& e)
+	{
+		std::cerr << "Could not open file " << std::string(filePath) << "\n";
+	}
+	catch (const StackException& e)
+	{
+		std::cerr << e.what() << std::endl;
+		exit(0);
 	}
 }
 

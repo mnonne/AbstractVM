@@ -39,6 +39,22 @@ public:
 	}
 	virtual ~Operand() {}
 
+	Operand(const Operand& rhs)
+	{
+		m_value = rhs.m_value;
+		m_strVal = rhs.m_strVal;
+	}
+
+	Operand& operator= (const Operand& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_value = rhs.m_value;
+			m_strVal = rhs.m_strVal;
+		}
+		return *this;
+	}
+
 	virtual int getPrecision(void) const override
 	{
 		return getType();
