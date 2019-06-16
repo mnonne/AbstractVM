@@ -14,19 +14,14 @@
 
 #include <stdexcept>
 
-class LexicalException : public std::exception
+class LexicalException : public std::invalid_argument
 {
 public:
 	LexicalException();
 	LexicalException(const LexicalException& rhs);
 	virtual ~LexicalException();
-	LexicalException& operator= (const LexicalException& rhs);
+	LexicalException& operator= (const LexicalException& rhs) = delete;
 	LexicalException(const char* msg);
-
-	virtual const char* what() const noexcept override;
-
-private:
-	const char* m_Info;
 };
 
 

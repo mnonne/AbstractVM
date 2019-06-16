@@ -12,14 +12,14 @@
 #include "LexicalException.h"
 
 LexicalException::LexicalException() :
-	std::exception(),
-	m_Info("Lexical exception")
+	std::invalid_argument("Lexical exception")
 {
 }
 
-LexicalException::LexicalException(const LexicalException &rhs)
+LexicalException::LexicalException(const LexicalException &rhs) :
+	std::invalid_argument(rhs.what())
 {
-	m_Info = rhs.what();
+	
 }
 
 LexicalException::~LexicalException()
@@ -27,19 +27,8 @@ LexicalException::~LexicalException()
 
 }
 
-LexicalException &LexicalException::operator=(const LexicalException &rhs)
-{
-	m_Info = rhs.what();
-	return *this;
-}
-
 LexicalException::LexicalException(const char *msg) :
-	m_Info(msg)
+	std::invalid_argument(msg)
 {
 
-}
-
-const char *LexicalException::what() const noexcept
-{
-	return m_Info;
 }
