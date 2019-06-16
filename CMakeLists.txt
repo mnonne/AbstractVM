@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(AbstractVM)
 
-set(CMAKE_CXX_COMPILER "/usr/bin/g++-8")
+set(CMAKE_CXX_COMPILER "/usr/bin/clang")
 
 set(CMAKE_CXX_STANDARD 14)
 

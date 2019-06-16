@@ -10,17 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "OperandSizeException.h"
+#include <iostream>
 
 OperandSizeException::OperandSizeException() :
-	std::exception(),
-	m_Info("Operand size overflow of underflow")
+	std::out_of_range("Operand size overflow of underflow")
 {
 
 }
 
-OperandSizeException::OperandSizeException(const OperandSizeException &rhs)
+OperandSizeException::OperandSizeException(const OperandSizeException &rhs) :
+	std::out_of_range(rhs.what())
 {
-	m_Info = rhs.what();
+
 }
 
 OperandSizeException::~OperandSizeException()
@@ -28,20 +29,8 @@ OperandSizeException::~OperandSizeException()
 
 }
 
-const OperandSizeException& OperandSizeException::operator=(const OperandSizeException &rhs)
-{
-	m_Info = rhs.what();
-	return *this;
-}
-
 OperandSizeException::OperandSizeException(const char *msg) :
-	m_Info(msg),
-	std::exception()
+	std::out_of_range(msg)
 {
 
-}
-
-const char *OperandSizeException::what() const noexcept
-{
-	return m_Info;
 }

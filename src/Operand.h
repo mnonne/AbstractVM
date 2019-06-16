@@ -175,7 +175,7 @@ public:
 		return m_strVal;
 	}
 
-	eOperandType const compareOperand(IOperand const& op) const
+	eOperandType compareOperand(IOperand const& op) const
 	{
 		return (getPrecision() > op.getPrecision()) ? getType() : op.getType();
 	}

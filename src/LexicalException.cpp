@@ -34,8 +34,7 @@ LexicalException &LexicalException::operator=(const LexicalException &rhs)
 }
 
 LexicalException::LexicalException(const char *msg) :
-	m_Info(msg),
-	std::exception()
+	m_Info(msg)
 {
 
 }

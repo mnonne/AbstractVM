@@ -48,7 +48,17 @@ IOperand const *OperandFactory::createInt8(std::string const& value) const {
 }
 
 IOperand const *OperandFactory::createInt16(std::string const& value) const {
-	int64_t val = std::stoll(value);
+	int64_t val;
+	try
+	{
+		val = std::stoll(value);
+	}
+	catch(const std::out_of_range& e)
+	{
+		std::cerr << e.what() << '\n';
+		std::string msg = value + " is out of Int16 range";
+		throw OperandSizeException(msg.data());
+	}
 	if (val > INT16_MAX)
 		throw OperandSizeException("Overflow of Int16");
 	else if (val < INT16_MIN)
@@ -66,7 +76,8 @@ IOperand const *OperandFactory::createInt32(std::string const& value) const {
 }
 
 IOperand const *OperandFactory::createFloat(std::string const& value) const {
-	try {
+	try
+	{
 		float val = std::stof(value);
 		return new Operand<float>(val);
 	}
@@ -78,7 +89,8 @@ IOperand const *OperandFactory::createFloat(std::string const& value) const {
 }
 
 IOperand const *OperandFactory::createDouble(std::string const& value) const {
-	try {
+	try
+	{
 		float val = std::stod(value);
 		return new Operand<double>(val);
 	}

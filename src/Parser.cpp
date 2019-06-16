@@ -99,7 +99,7 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.push(FACTORY->createOperand(it->type, it->value));
 				}
-				catch (OperandSizeException& e)
+				catch (const OperandSizeException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -108,7 +108,7 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.pop();
 				}
-				catch (StackException& e)
+				catch (const StackException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -117,7 +117,7 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.dump();
 				}
-				catch (StackException& e)
+				catch (const StackException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -126,7 +126,7 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.compare(FACTORY->createOperand(it->type, it->value));
 				}
-				catch (StackException& e)
+				catch (const StackException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -135,11 +135,11 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.add();
 				}
-				catch (StackException& e)
+				catch (const StackException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
-				catch (OperandSizeException&e)
+				catch (const OperandSizeException&e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -148,7 +148,7 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.sub();
 				}
-				catch (StackException& e)
+				catch (const StackException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -157,7 +157,7 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.mul();
 				}
-				catch (StackException& e)
+				catch (const StackException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -166,11 +166,11 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.div();
 				}
-				catch (StackException& e)
+				catch (const StackException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
-				catch (OperandSizeException& e)
+				catch (const OperandSizeException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -179,11 +179,11 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.mod();
 				}
-				catch (StackException& e)
+				catch (const StackException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
-				catch (OperandSizeException& e)
+				catch (const OperandSizeException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}
@@ -192,7 +192,7 @@ void Parser::parseCommands(OperandStack &stack) const
 				try {
 					stack.print();
 				}
-				catch (StackException& e)
+				catch (const StackException& e)
 				{
 					std::cout << "Line " << it->lNumber << ": " << e.what() << std::endl;
 				}

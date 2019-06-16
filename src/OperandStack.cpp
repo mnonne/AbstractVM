@@ -34,7 +34,7 @@ void OperandStack::dump() const
 {
 	if (m_stack.size() < 1)
 		throw StackException("Dump on empty stack");
-	for (int i = 0; i < m_stack.size(); ++i)
+	for (size_t i = 0; i < m_stack.size(); ++i)
 		std::cout << m_stack[i]->toString() << std::endl;
 }
 

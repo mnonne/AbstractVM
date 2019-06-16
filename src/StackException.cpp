@@ -35,8 +35,7 @@ const StackException& StackException::operator=(const StackException &rhs)
 }
 
 StackException::StackException(const char *msg) :
-	m_Info(msg),
-	std::exception()
+	m_Info(msg)
 {
 
 }

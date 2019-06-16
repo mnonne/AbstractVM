@@ -7,18 +7,13 @@
 
 #include <stdexcept>
 
-class OperandSizeException : public std::exception {
+class OperandSizeException : public std::out_of_range {
 public:
 	OperandSizeException();
 	OperandSizeException(const OperandSizeException& rhs);
 	virtual ~OperandSizeException();
-	const OperandSizeException& operator= (const OperandSizeException& rhs);
+	const OperandSizeException& operator= (const OperandSizeException& rhs) = delete;
 	OperandSizeException(const char* msg);
-
-	virtual const char* what() const noexcept override ;
-
-private:
-	const char* m_Info;
 };
 
 
